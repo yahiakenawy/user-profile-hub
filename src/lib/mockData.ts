@@ -68,6 +68,9 @@ export const mockAnalysisAdmin = {
   recent_snapshots: [
     { id: 1, period_type: 'monthly', period_start: '2026-01-01', period_end: '2026-01-31', academic_year: '2025-2026', term: 'First', total_students: 342, avg_score: 74.5, pass_rate: 82.3, exams_administered: 156, performance_distribution: { excellent: 45, good: 120, average: 130, needs_improvement: 47 }, subject_performance: null, level_distribution: null, growth_from_previous_term: 2.3, growth_indicator: 'improving' },
     { id: 2, period_type: 'monthly', period_start: '2025-12-01', period_end: '2025-12-31', academic_year: '2025-2026', term: 'First', total_students: 340, avg_score: 72.2, pass_rate: 80.1, exams_administered: 142, performance_distribution: null, subject_performance: null, level_distribution: null, growth_from_previous_term: -1.1, growth_indicator: 'declining' },
+    { id: 3, period_type: 'monthly', period_start: '2025-11-01', period_end: '2025-11-30', academic_year: '2025-2026', term: 'First', total_students: 338, avg_score: 73.3, pass_rate: 81.2, exams_administered: 130, performance_distribution: null, subject_performance: null, level_distribution: null, growth_from_previous_term: 1.5, growth_indicator: 'improving' },
+    { id: 4, period_type: 'monthly', period_start: '2025-10-01', period_end: '2025-10-31', academic_year: '2025-2026', term: 'First', total_students: 335, avg_score: 71.8, pass_rate: 79.7, exams_administered: 120, performance_distribution: null, subject_performance: null, level_distribution: null, growth_from_previous_term: 0.2, growth_indicator: 'stable' },
+    { id: 5, period_type: 'monthly', period_start: '2025-09-01', period_end: '2025-09-30', academic_year: '2025-2026', term: 'First', total_students: 330, avg_score: 71.6, pass_rate: 79.5, exams_administered: 98, performance_distribution: null, subject_performance: null, level_distribution: null, growth_from_previous_term: null, growth_indicator: 'stable' },
   ],
   teacher_rankings: [
     { id: 1, name: 'Ali Hassan', subject: 'Arabic', avg_score: 78.2, pass_rate: 88.5, rank: 1 },
@@ -90,6 +93,16 @@ export const mockAnalysisAdmin = {
     score_change: 2.3,
     pass_rate_change: 2.2,
   },
+  // Extra chart data
+  monthly_scores: [
+    { month: 'Sep', avg_score: 71.6, pass_rate: 79.5 },
+    { month: 'Oct', avg_score: 71.8, pass_rate: 79.7 },
+    { month: 'Nov', avg_score: 73.3, pass_rate: 81.2 },
+    { month: 'Dec', avg_score: 72.2, pass_rate: 80.1 },
+    { month: 'Jan', avg_score: 74.5, pass_rate: 82.3 },
+  ],
+  performance_distribution: { excellent: 45, good: 120, average: 130, needs_improvement: 47 },
+  level_distribution: { elementary: 120, middle: 112, high: 110 },
 };
 
 export const mockAnalysisTeacher = {
@@ -106,6 +119,14 @@ export const mockAnalysisTeacher = {
     areas_for_improvement: ['Essay writing needs more focus', 'Grammar assessments below average'],
     recommendations: ['Introduce weekly essay assignments', 'Use interactive grammar exercises', 'Peer review sessions'],
   },
+  grade_distribution: { A: 12, B: 20, C: 18, D: 10, F: 5 },
+  monthly_scores: [
+    { month: 'Sep', avg_score: 72.0, pass_rate: 80.0 },
+    { month: 'Oct', avg_score: 73.5, pass_rate: 82.0 },
+    { month: 'Nov', avg_score: 75.1, pass_rate: 83.5 },
+    { month: 'Dec', avg_score: 74.8, pass_rate: 84.0 },
+    { month: 'Jan', avg_score: 76.3, pass_rate: 85.1 },
+  ],
 };
 
 export const mockAnalysisStudent = {
@@ -120,6 +141,18 @@ export const mockAnalysisStudent = {
     areas_for_improvement: ['Math problem solving', 'English writing skills'],
     recommendations: ['Practice fraction exercises daily', 'Read English short stories', 'Join the math study group'],
   },
+  subject_scores: [
+    { subject: 'Arabic', score: 85.3 },
+    { subject: 'English', score: 78.5 },
+    { subject: 'Math', score: 72.1 },
+  ],
+  exam_history: [
+    { exam: 'Exam 1', Arabic: 80, English: 75, Math: 65 },
+    { exam: 'Exam 2', Arabic: 82, English: 78, Math: 68 },
+    { exam: 'Exam 3', Arabic: 85, English: 76, Math: 70 },
+    { exam: 'Exam 4', Arabic: 88, English: 80, Math: 72 },
+    { exam: 'Exam 5', Arabic: 90, English: 82, Math: 75 },
+  ],
 };
 
 export const mockSubjectOverview = {
@@ -130,6 +163,20 @@ export const mockSubjectOverview = {
     { student_id: 11, student_name: 'Layla Ibrahim', avg_score: 94.2, rank: 2 },
     { student_id: 12, student_name: 'Omar Khalid', avg_score: 92.8, rank: 3 },
     { student_id: 3, student_name: 'Sara Ahmed', avg_score: 85.3, rank: 8 },
+  ],
+  score_distribution: [
+    { range: '90-100', count: 15 },
+    { range: '80-89', count: 35 },
+    { range: '70-79', count: 40 },
+    { range: '60-69', count: 20 },
+    { range: '<60', count: 10 },
+  ],
+  monthly_trend: [
+    { month: 'Sep', avg_score: 74.0 },
+    { month: 'Oct', avg_score: 75.5 },
+    { month: 'Nov', avg_score: 76.8 },
+    { month: 'Dec', avg_score: 77.1 },
+    { month: 'Jan', avg_score: 78.2 },
   ],
 };
 

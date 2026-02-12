@@ -13,6 +13,7 @@ import {
   Users,
   Mail,
   Settings,
+  X,
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import BasicInfoTab from '@/components/profile/BasicInfoTab';
@@ -21,6 +22,7 @@ import SubjectAnalysisTab from '@/components/profile/SubjectAnalysisTab';
 import SubscriptionTab from '@/components/profile/SubscriptionTab';
 import MembersTab from '@/components/profile/MembersTab';
 import InvitationsTab from '@/components/profile/InvitationsTab';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface TabConfig {
   key: string;
@@ -51,7 +53,6 @@ const ProfilePage = () => {
 
   const filteredTabs = tabs.filter((tab) => tab.roles.includes(role));
 
-  // Fetch profile data
   const { data: profileResponse, isLoading: profileLoading, error: profileError, refetch: refetchProfile } = useQuery({
     queryKey: ['profile'],
     queryFn: async () => {
@@ -68,70 +69,79 @@ const ProfilePage = () => {
       <Navbar />
       <main className="content-container pt-24 pb-12">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center justify-between mb-8"
+        >
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full gradient-bg flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl gradient-bg flex items-center justify-center shadow-lg shadow-primary/20">
               <User className="w-8 h-8 text-primary-foreground" />
             </div>
             <div>
               <h1 className="text-2xl font-bold">{user?.username ?? t('profile.title')}</h1>
-              <p className="text-muted-foreground">{t(`common.${profileRole}`)}</p>
+              <p className="text-sm text-muted-foreground font-medium">{t(`common.${profileRole}`)}</p>
             </div>
           </div>
           <button
             onClick={() => setShowSettings(!showSettings)}
-            className="p-3 rounded-full hover:bg-muted transition-colors"
+            className={`p-3 rounded-xl transition-all ${showSettings ? 'gradient-bg text-primary-foreground shadow-lg shadow-primary/20' : 'bg-card border border-border hover:border-primary/50 text-muted-foreground hover:text-foreground'}`}
             title={t('profile.settings')}
           >
-            <Settings className="w-6 h-6 text-muted-foreground" />
+            {showSettings ? <X className="w-5 h-5" /> : <Settings className="w-5 h-5" />}
           </button>
-        </div>
+        </motion.div>
 
-        {/* Settings Modal */}
+        {/* Settings Panel */}
         <AnimatePresence>
           {showSettings && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="glass-card p-8 mb-6 text-center"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="overflow-hidden mb-6"
             >
-              <Settings className="w-12 h-12 mx-auto mb-3 text-muted-foreground" />
-              <h3 className="text-xl font-bold mb-2">{t('profile.settings')}</h3>
-              <p className="text-muted-foreground">{t('profile.comingSoon')}</p>
+              <Card className="border bg-card/80 backdrop-blur-sm">
+                <CardContent className="p-8 text-center">
+                  <Settings className="w-12 h-12 mx-auto mb-3 text-muted-foreground opacity-50" />
+                  <h3 className="text-xl font-bold mb-1">{t('profile.settings')}</h3>
+                  <p className="text-muted-foreground">{t('profile.comingSoon')}</p>
+                </CardContent>
+              </Card>
             </motion.div>
           )}
         </AnimatePresence>
 
         {/* Tabs */}
-        <div className="flex flex-wrap gap-2 mb-6 overflow-x-auto scrollbar-hide pb-2">
-          {filteredTabs.map((tab) => (
-            <button
+        <div className="flex flex-wrap gap-2 mb-8 overflow-x-auto scrollbar-hide pb-2">
+          {filteredTabs.map((tab, i) => (
+            <motion.button
               key={tab.key}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.04 }}
               onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap ${
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap ${
                 activeTab === tab.key
-                  ? 'gradient-bg text-primary-foreground shadow-lg'
-                  : isDark
-                  ? 'bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground'
-                  : 'glass-card text-muted-foreground hover:text-foreground'
+                  ? 'gradient-bg text-primary-foreground shadow-lg shadow-primary/20'
+                  : 'bg-card border border-border text-muted-foreground hover:border-primary/50 hover:text-foreground'
               }`}
             >
               {tab.icon}
               {t(tab.labelKey)}
-            </button>
+            </motion.button>
           ))}
         </div>
 
         {/* Loading / Error for profile */}
         {profileLoading && activeTab === 'info' && (
-          <div className="flex justify-center py-12">
+          <div className="flex justify-center py-16">
             <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full" />
           </div>
         )}
 
         {profileError && activeTab === 'info' && (
-          <div className="text-center py-12">
+          <div className="text-center py-16">
             <p className="text-destructive mb-2">{t('common.error')}</p>
             <button onClick={() => refetchProfile()} className="text-primary underline">{t('common.retry')}</button>
           </div>
@@ -139,7 +149,7 @@ const ProfilePage = () => {
 
         {/* Tab Content */}
         <AnimatePresence mode="wait">
-          <motion.div key={activeTab} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }}>
+          <motion.div key={activeTab} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.2 }}>
             {activeTab === 'info' && !profileLoading && !profileError && (
               <BasicInfoTab role={profileRole} profileData={profileData} />
             )}
