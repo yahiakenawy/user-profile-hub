@@ -85,6 +85,9 @@ const translations: Record<string, Record<Language, string>> = {
   'analysis.period': { en: 'Period', ar: 'الفترة' },
   'analysis.needsAttention': { en: 'Needs Attention', ar: 'يحتاج اهتمام' },
   'analysis.good': { en: 'Good', ar: 'جيد' },
+  'analysis.performanceDistribution': { en: 'Performance Distribution', ar: 'توزيع الأداء' },
+  'analysis.gradeDistribution': { en: 'Grade Distribution', ar: 'توزيع الدرجات' },
+  'analysis.scoreDistribution': { en: 'Score Distribution', ar: 'توزيع الدرجات' },
 
   // Subscription
   'sub.currentPlan': { en: 'Current Plan', ar: 'الخطة الحالية' },
